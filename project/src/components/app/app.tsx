@@ -1,5 +1,8 @@
+import MainPage from '../../pages/main-page/main-page';
+import { placeCards } from './app.utils';
+
 function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+  return <MainPage placeCards={placeCards} />;
 }
 
 export default App;
