@@ -1,8 +1,10 @@
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { Props } from './card.types';
 
 const Card:FC<Props> = ({ dataPlaceCard }) => {
   const {
+    id,
     img,
     isPremium,
     price,
@@ -19,9 +21,9 @@ const Card:FC<Props> = ({ dataPlaceCard }) => {
         </div>
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href='/'>
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={img} width="260" height="200" alt="Place" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -37,7 +39,7 @@ const Card:FC<Props> = ({ dataPlaceCard }) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href='/'>{name}</a>
+          <Link to={`/offer/${id}`}>{name}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
