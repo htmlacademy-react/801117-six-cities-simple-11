@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-const NotFoundPage = () => (
+const NotFoundPage: FC = () => (
   <div className='page'>
     <main className="page__main">
       <h1>404. Page not found</h1>

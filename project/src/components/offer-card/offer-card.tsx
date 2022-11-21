@@ -1,20 +1,30 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Props } from './card.types';
+import { TOffer } from '../../mooks/offers';
+import { getRaitingOfferInStars } from '../../utils';
 
-const Card:FC<Props> = ({ dataPlaceCard }) => {
+type OfferCardProps = {
+  offer: TOffer;
+  onMouseOver: (offer: TOffer) => void;
+}
+
+const OfferCard:FC<OfferCardProps> = ({ offer, onMouseOver }) => {
   const {
     id,
-    img,
+    images,
     isPremium,
     price,
-    name,
+    title,
     type,
     rating,
-  } = dataPlaceCard;
+  } = offer;
+
+  const handleOfferCardMouseOver = () => {
+    onMouseOver(offer);
+  };
 
   return (
-    <article className="cities__card place-card">
+    <article className="cities__card place-card" onMouseOver={handleOfferCardMouseOver}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -22,7 +32,7 @@ const Card:FC<Props> = ({ dataPlaceCard }) => {
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={img} width="260" height="200" alt="Place" />
+          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -34,12 +44,12 @@ const Card:FC<Props> = ({ dataPlaceCard }) => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${rating}%`}}></span>
+            <span style={{width: `${getRaitingOfferInStars(rating)}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{name}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -47,4 +57,4 @@ const Card:FC<Props> = ({ dataPlaceCard }) => {
   );
 };
 
-export default Card;
+export default OfferCard;
