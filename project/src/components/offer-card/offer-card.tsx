@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { TOffer } from '../../mooks/offers';
 import { getRaitingOfferInStars } from '../../utils';
 
 type OfferCardProps = {
   offer: TOffer;
-  onMouseOver: (offer: TOffer) => void;
+  onMouseOver?: (offer: TOffer) => void;
 }
 
 const OfferCard:FC<OfferCardProps> = ({ offer, onMouseOver }) => {
@@ -20,8 +20,14 @@ const OfferCard:FC<OfferCardProps> = ({ offer, onMouseOver }) => {
   } = offer;
 
   const handleOfferCardMouseOver = () => {
-    onMouseOver(offer);
+    if (onMouseOver) {
+      onMouseOver(offer);
+    }
   };
+
+  useEffect(() => {
+    window.scrollTo(0,0);
+  }, [offer]);
 
   return (
     <article className="cities__card place-card" onMouseOver={handleOfferCardMouseOver}>
