@@ -1,6 +1,14 @@
 import { FC, useState, } from 'react';
+import cn from 'classnames';
 import OfferCard from '../offer-card/offer-card';
-import { TOffer } from '../../mooks/offers';
+import Map from '../map/map';
+import { TOffer, TOfferLocation } from '../../mooks/offers';
+
+const CITY: TOfferLocation = {
+  latitude: 52.370216,
+  longitude: 4.895168,
+  zoom: 10
+};
 
 type OfferCardListProps = {
   offers: TOffer[];
@@ -8,18 +16,26 @@ type OfferCardListProps = {
 
 const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
-  const [activeOfferCard, setActiveOfferCard] = useState<TOffer | null>(null);
+  const [activeOfferCardId, setActiveOfferCardId] = useState<number | null>(null);
 
   // eslint-disable-next-line no-console
-  console.log('activeOfferCard', activeOfferCard);
+  console.log('activeOfferCard', activeOfferCardId);
 
   const handleSortClick = () => {
     setIsOpenSort((prevState) => !prevState);
   };
 
   const handleOfferCardMauseOver = (offer: TOffer) => {
-    setActiveOfferCard(offer);
+    setActiveOfferCardId(offer.id);
   };
+
+  const points = offers.map((offer) => {
+    const { location, id } = offer;
+    return {
+      id,
+      ...location,
+    };
+  });
 
   return (
     <div className="cities">
@@ -35,21 +51,26 @@ const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
                 <use xlinkHref="#icon-arrow-select"></use>
               </svg>
             </span>
-            {isOpenSort && (
-              <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                <li className="places__option" tabIndex={0}>Price: low to high</li>
-                <li className="places__option" tabIndex={0}>Price: high to low</li>
-                <li className="places__option" tabIndex={0}>Top rated first</li>
-              </ul>
-            )}
+            <ul className={cn('places__options', 'places__options--custom', {'places__options--opened': isOpenSort})}>
+              <li className="places__option places__option--active" tabIndex={0}>Popular</li>
+              <li className="places__option" tabIndex={0}>Price: low to high</li>
+              <li className="places__option" tabIndex={0}>Price: high to low</li>
+              <li className="places__option" tabIndex={0}>Top rated first</li>
+            </ul>
           </form>
           <div className="cities__places-list places__list tabs__content">
             {offers.map((item) => <OfferCard key={item.id} offer={item} onMouseOver={handleOfferCardMauseOver} />)}
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <section className="cities__map map">
+            <Map
+              city={CITY}
+              points={points}
+              selectedPointsId={activeOfferCardId}
+            />
+          </section>
+
         </div>
       </div>
     </div>

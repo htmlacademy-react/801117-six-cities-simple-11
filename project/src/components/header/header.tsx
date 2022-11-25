@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import cn from 'classnames';
 import { AppRoute } from '../../const';
 
 const Header:FC = () => {
@@ -10,10 +11,10 @@ const Header:FC = () => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Link className={
-              `header__logo-link
-              ${pathname === AppRoute.Main ? 'header__logo-link--active' : ''}`
-            } to={AppRoute.Main}
+            <Link className={cn(
+              'header__logo-link',
+              {'header__logo-link--active': pathname === AppRoute.Main},
+            )} to={AppRoute.Main}
             >
               <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
             </Link>
