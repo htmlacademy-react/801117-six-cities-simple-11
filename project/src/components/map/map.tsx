@@ -46,7 +46,7 @@ const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
     }
   }, [map, points, selectedPointsId]);
 
-  return <div style={{height: '800px'}} ref={mapRef} ></div>;
+  return <div style={{height: '100%'}} ref={mapRef} ></div>;
 };
 
 export default Map;

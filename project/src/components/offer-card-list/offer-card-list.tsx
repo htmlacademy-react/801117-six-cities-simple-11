@@ -2,13 +2,8 @@ import { FC, useState, } from 'react';
 import cn from 'classnames';
 import OfferCard from '../offer-card/offer-card';
 import Map from '../map/map';
-import { TOffer, TOfferLocation } from '../../mooks/offers';
-
-const CITY: TOfferLocation = {
-  latitude: 52.370216,
-  longitude: 4.895168,
-  zoom: 10
-};
+import { TOffer } from '../../mooks/offers';
+import { city } from '../../mooks/city';
 
 type OfferCardListProps = {
   offers: TOffer[];
@@ -17,9 +12,6 @@ type OfferCardListProps = {
 const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [activeOfferCardId, setActiveOfferCardId] = useState<number | null>(null);
-
-  // eslint-disable-next-line no-console
-  console.log('activeOfferCard', activeOfferCardId);
 
   const handleSortClick = () => {
     setIsOpenSort((prevState) => !prevState);
@@ -65,7 +57,7 @@ const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
         <div className="cities__right-section">
           <section className="cities__map map">
             <Map
-              city={CITY}
+              city={city}
               points={points}
               selectedPointsId={activeOfferCardId}
             />
