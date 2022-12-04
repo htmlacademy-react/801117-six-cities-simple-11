@@ -1,6 +1,7 @@
 import { FC, useState, } from 'react';
 import cn from 'classnames';
 import OfferCard from '../offer-card/offer-card';
+import { useAppSelector } from '../../hooks';
 import Map from '../map/map';
 import { TOffer } from '../../mooks/offers';
 import { city } from '../../mooks/city';
@@ -9,9 +10,12 @@ type OfferCardListProps = {
   offers: TOffer[];
 };
 
-const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
+const OfferCardList:FC<OfferCardListProps> = () => {
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [activeOfferCardId, setActiveOfferCardId] = useState<number | null>(null);
+
+  const currentCity = useAppSelector((state) => state.city);
+  const offersInCurrentCity = useAppSelector((state) => state.offersInCurrentCity);
 
   const handleSortClick = () => {
     setIsOpenSort((prevState) => !prevState);
@@ -21,7 +25,7 @@ const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
     setActiveOfferCardId(offer.id);
   };
 
-  const points = offers.map((offer) => {
+  const points = offersInCurrentCity.map((offer) => {
     const { location, id } = offer;
     return {
       id,
@@ -34,7 +38,7 @@ const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
       <div className="cities__places-container container">
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">312 places to stay in Amsterdam</b>
+          <b className="places__found">{offersInCurrentCity.length} places to stay in {currentCity}</b>
           <form className="places__sorting" action="#" method="get">
             <span className="places__sorting-caption">Sort by </span>
             <span className="places__sorting-type" tabIndex={0} onClick={handleSortClick}>
@@ -51,7 +55,7 @@ const OfferCardList:FC<OfferCardListProps> = ({ offers }) => {
             </ul>
           </form>
           <div className="cities__places-list places__list tabs__content">
-            {offers.map((item) => <OfferCard key={item.id} offer={item} onMouseOver={handleOfferCardMauseOver} />)}
+            {offersInCurrentCity.map((item) => <OfferCard key={item.id} offer={item} onMouseOver={handleOfferCardMauseOver} />)}
           </div>
         </section>
         <div className="cities__right-section">
