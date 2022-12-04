@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FC, useRef, useEffect } from 'react';
-import {Icon, Marker} from 'leaflet';
+import { Icon, Marker, LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMap } from '../../hooks/useMap';
 import { TOfferLocation } from '../../mooks/offers';
@@ -28,6 +27,8 @@ const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    const newLayer: LayerGroup = new LayerGroup();
+
     if (map) {
       points.forEach((point) => {
         const marker = new Marker({
@@ -41,10 +42,17 @@ const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
               ? currentCustomIcon
               : defaultCustomIcon
           )
-          .addTo(map);
+          .addTo(newLayer);
       });
+
+      newLayer.addTo(map);
     }
+
+    return () => {
+      map?.removeLayer(newLayer);
+    };
   }, [map, points, selectedPointsId]);
+
 
   return <div style={{height: '100%'}} ref={mapRef} ></div>;
 };
