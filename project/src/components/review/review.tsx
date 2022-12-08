@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { TReview } from '../../mooks/reviews';
+import { Review as ReviewType } from '../../types';
 import { getRaitingOfferInStars } from '../../utils';
 
 type ReviewProps = {
-  review: TReview;
+  review: ReviewType;
 }
 
 const Review: FC<ReviewProps> = ({ review }) => {

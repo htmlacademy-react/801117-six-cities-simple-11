@@ -5,20 +5,21 @@ import {
   sortOffersPopular,
   sortOffersPriceLowToHigh,
   sortOffersPriceHighToLow,
-  sortOffersTopRatedFirst
+  sortOffersTopRatedFirst,
+  loadOffers,
 } from './action';
 import { City } from '../const';
-import { offers, TOffer } from '../mooks/offers';
+import { Offers } from '../types';
 
 type TInitialState = {
   city: City;
-  offers: TOffer[];
-  offersInCurrentCity: TOffer[] | [];
+  offers: Offers;
+  offersInCurrentCity: Offers;
 }
 
 const initialState: TInitialState = {
   city: City.Paris,
-  offers,
+  offers: [],
   offersInCurrentCity: [],
 };
 
@@ -28,10 +29,10 @@ export const reducer = createReducer(initialState, (builder) => {
       state.city = action.payload;
     })
     .addCase(setOffersInCurrentCity, (state, action) => {
-      state.offersInCurrentCity = offers.filter((offer) => offer.city.name === action.payload);
+      state.offersInCurrentCity = state.offers.filter((offer) => offer.city.name === action.payload);
     })
     .addCase(sortOffersPopular, (state) => {
-      state.offersInCurrentCity = offers.filter((offer) => offer.city.name === state.city);
+      state.offersInCurrentCity = state.offers.filter((offer) => offer.city.name === state.city);
     })
     .addCase(sortOffersPriceLowToHigh, (state) => {
       state.offersInCurrentCity.sort((a, b) => a.price - b.price);
@@ -41,5 +42,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(sortOffersTopRatedFirst, (state) => {
       state.offersInCurrentCity.sort((a, b) => b.rating - a.rating);
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.offers = action.payload;
     });
 });

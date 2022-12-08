@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import cn from 'classnames';
-import { TOffer } from '../../mooks/offers';
+import { Offer, Offers } from '../../types';
 import { reviews } from '../../mooks/reviews';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
@@ -10,12 +10,12 @@ import { getRaitingOfferInStars } from '../../utils';
 import { city } from '../../mooks/city';
 
 type RoomPageProps = {
-  offers: TOffer[];
+  offers: Offers;
 }
 
 const RoomPage:FC<RoomPageProps> = ({ offers }) => {
   const { id } = useParams();
-  const offer = offers.find((item) => item.id === Number(id)) as TOffer;
+  const offer = offers.find((item) => item.id === Number(id)) as Offer;
 
   const points = offers.map((item) => {
     const { location } = item;
@@ -24,9 +24,6 @@ const RoomPage:FC<RoomPageProps> = ({ offers }) => {
       ...location,
     };
   });
-
-  // eslint-disable-next-line no-console
-  console.log('points', points);
 
   const {
     images,

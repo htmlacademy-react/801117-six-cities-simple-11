@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { TReview } from '../../mooks/reviews';
+import { Review as ReviewType} from '../../types';
 import Review from '../review/review';
 import AddReview from '../add-review/add-review';
 
 type ReviewListProps = {
-  reviews: TReview[];
+  reviews: ReviewType[];
 }
 
 const ReviewList:FC<ReviewListProps> = ({ reviews }) => (

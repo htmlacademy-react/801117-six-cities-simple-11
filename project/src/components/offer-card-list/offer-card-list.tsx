@@ -3,11 +3,11 @@ import Sorting from '../sorting/sorting';
 import OfferCard from '../offer-card/offer-card';
 import { useAppSelector } from '../../hooks';
 import Map from '../map/map';
-import { TOffer } from '../../mooks/offers';
+import { Offers, Offer } from '../../types';
 import { city } from '../../mooks/city';
 
 type OfferCardListProps = {
-  offers: TOffer[];
+  offers: Offers;
 };
 
 const OfferCardList:FC<OfferCardListProps> = () => {
@@ -16,11 +16,11 @@ const OfferCardList:FC<OfferCardListProps> = () => {
   const currentCity = useAppSelector((state) => state.city);
   const offersInCurrentCity = useAppSelector((state) => state.offersInCurrentCity);
 
-  const handleOfferCardMauseOver = (offer: TOffer) => {
+  const handleOfferCardMauseOver = (offer: Offer) => {
     setActiveOfferCardId(offer.id);
   };
 
-  const points = offersInCurrentCity.map((offer) => {
+  const points = offersInCurrentCity.map((offer: Offer) => {
     const { location, id } = offer;
     return {
       id,
@@ -36,7 +36,7 @@ const OfferCardList:FC<OfferCardListProps> = () => {
           <b className="places__found">{offersInCurrentCity.length} places to stay in {currentCity}</b>
           <Sorting />
           <div className="cities__places-list places__list tabs__content">
-            {offersInCurrentCity.map((item) => <OfferCard key={item.id} offer={item} onMouseOver={handleOfferCardMauseOver} />)}
+            {offersInCurrentCity.map((item: Offer) => <OfferCard key={item.id} offer={item} onMouseOver={handleOfferCardMauseOver} />)}
           </div>
         </section>
         <div className="cities__right-section">
