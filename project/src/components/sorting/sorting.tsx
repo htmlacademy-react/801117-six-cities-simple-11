@@ -8,11 +8,7 @@ import {
 } from '../../store/action';
 import cn from 'classnames';
 
-type SortingTypes = {
-  [key: string]: string;
-}
-
-const SORTING_TYPES: SortingTypes = {
+const SORTING_TYPES: Record<string, string> = {
   POPULAR: 'Popular',
   PRICE_LOW_TO_HIGH: 'Price: low to high',
   PRICE_HIGH_TO_LOW: 'Price: high to low',
@@ -42,6 +38,12 @@ const Sorting:FC = () => {
     setIsOpenSort((prevState) => !prevState);
   };
 
+  const handleSortOptionClick = (option: string) => () => {
+    setCurrentSortingType(option);
+    setIsOpenSort(false);
+    dispatch(getActionForSort(option)());
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
@@ -57,11 +59,7 @@ const Sorting:FC = () => {
             key={item}
             className={cn('places__option', {'places__option--active': currentSortingType === SORTING_TYPES[item]})}
             tabIndex={0}
-            onClick={() => {
-              setCurrentSortingType(SORTING_TYPES[item]);
-              setIsOpenSort(false);
-              dispatch(getActionForSort(SORTING_TYPES[item])());
-            }}
+            onClick={handleSortOptionClick(SORTING_TYPES[item])}
           >
             {SORTING_TYPES[item]}
           </li>

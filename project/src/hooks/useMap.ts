@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect, MutableRefObject } from 'react';
-import {Map, TileLayer} from 'leaflet';
-import { TOfferLocation } from '../mooks/offers';
+import { Map, TileLayer } from 'leaflet';
+import { Location } from '../types';
 
-export const useMap = (mapRef: MutableRefObject<HTMLElement | null>, city: TOfferLocation) => {
+export const useMap = (mapRef: MutableRefObject<HTMLElement | null>, city: Location) => {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
 

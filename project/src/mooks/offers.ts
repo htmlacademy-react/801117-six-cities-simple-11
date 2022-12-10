@@ -1,40 +1,6 @@
-type TOfferHost = {
-  avatarUrl: string;
-  id: number;
-  isPro: boolean;
-  name: string;
-}
+import { Offers } from '../types';
 
-export type TOfferLocation = {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-}
-
-type TOfferCity = {
-  location: TOfferLocation;
-  name: string;
-}
-
-export type TOffer = {
-  id: number;
-  title: string;
-  images: string[];
-  bedrooms: number;
-  city: TOfferCity;
-  description: string;
-  goods: string[];
-  host: TOfferHost;
-  isPremium: boolean;
-  location: TOfferLocation;
-  maxAdults: number;
-  previewImage: string;
-  price: number;
-  rating: number;
-  type: string;
-}
-
-export const offers: TOffer[] = [
+export const mockOffers: Offers = [
   {
     bedrooms: 3,
     city: {

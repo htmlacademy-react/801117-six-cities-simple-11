@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { TOffer } from '../../mooks/offers';
+import { Offer } from '../../types';
 import { getRaitingOfferInStars } from '../../utils';
 
 type OfferCardProps = {
-  offer: TOffer;
-  onMouseOver?: (offer: TOffer) => void;
+  offer: Offer;
+  onMouseOver?: (offer: Offer) => void;
 }
 
 const OfferCard:FC<OfferCardProps> = ({ offer, onMouseOver }) => {

@@ -2,7 +2,7 @@ import { FC, useRef, useEffect } from 'react';
 import { Icon, Marker, LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMap } from '../../hooks/useMap';
-import { TOfferLocation } from '../../mooks/offers';
+import { Location } from '../../types';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -17,14 +17,14 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: TOfferLocation;
-  points: (TOfferLocation & { id: number })[];
+  cityLocation: Location;
+  points: (Location & { id: number })[];
   selectedPointsId: number | null;
 };
 
-const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
+const Map:FC<MapProps> = ({ cityLocation, points, selectedPointsId }) => {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, cityLocation);
 
   useEffect(() => {
     const newLayer: LayerGroup = new LayerGroup();
@@ -46,12 +46,16 @@ const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
       });
 
       newLayer.addTo(map);
+      map.flyTo({
+        lat: cityLocation.latitude,
+        lng: cityLocation.longitude,
+      });
     }
 
     return () => {
       map?.removeLayer(newLayer);
     };
-  }, [map, points, selectedPointsId]);
+  }, [map, points, selectedPointsId, cityLocation]);
 
 
   return <div style={{height: '100%'}} ref={mapRef} ></div>;

@@ -1,20 +1,6 @@
-type TReviewUser = {
-  id: number;
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
-}
+import { Review } from '../types';
 
-export type TReview = {
-  id: number;
-  user: TReviewUser;
-  comment: string;
-  date: string;
-  rating: number;
-
-};
-
-export const reviews: TReview[] = [
+export const reviews: Review[] = [
   {
     id: 1,
     user: {
