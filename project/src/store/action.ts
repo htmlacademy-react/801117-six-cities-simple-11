@@ -11,3 +11,4 @@ export const sortOffersPriceHighToLow = createAction('sorting/sortOffersPriceHig
 export const sortOffersTopRatedFirst = createAction('sorting/sortOffersTopRatedFirst');
 
 export const loadOffers = createAction<Offers>('data/loadOffers');
+export const setIsOffersDataLoading = createAction<boolean>('data/setIsOffersDataLoading');

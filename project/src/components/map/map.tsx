@@ -17,14 +17,14 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: Location;
+  cityLocation: Location;
   points: (Location & { id: number })[];
   selectedPointsId: number | null;
 };
 
-const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
+const Map:FC<MapProps> = ({ cityLocation, points, selectedPointsId }) => {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, cityLocation);
 
   useEffect(() => {
     const newLayer: LayerGroup = new LayerGroup();
@@ -46,12 +46,16 @@ const Map:FC<MapProps> = ({ city, points, selectedPointsId }) => {
       });
 
       newLayer.addTo(map);
+      map.flyTo({
+        lat: cityLocation.latitude,
+        lng: cityLocation.longitude,
+      });
     }
 
     return () => {
       map?.removeLayer(newLayer);
     };
-  }, [map, points, selectedPointsId]);
+  }, [map, points, selectedPointsId, cityLocation]);
 
 
   return <div style={{height: '100%'}} ref={mapRef} ></div>;

@@ -7,18 +7,21 @@ import {
   sortOffersPriceHighToLow,
   sortOffersTopRatedFirst,
   loadOffers,
+  setIsOffersDataLoading,
 } from './action';
 import { City } from '../const';
 import { Offers } from '../types';
 
 type TInitialState = {
   city: City;
+  isOffersDataLoading: boolean;
   offers: Offers;
   offersInCurrentCity: Offers;
 }
 
 const initialState: TInitialState = {
   city: City.Paris,
+  isOffersDataLoading: false,
   offers: [],
   offersInCurrentCity: [],
 };
@@ -45,5 +48,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(setIsOffersDataLoading, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     });
 });

@@ -7,7 +7,7 @@ import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import OfferCard from '../../components/offer-card/offer-card';
 import { getRaitingOfferInStars } from '../../utils';
-import { city } from '../../mooks/city';
+import { mockCity } from '../../mooks/city';
 
 type RoomPageProps = {
   offers: Offers;
@@ -127,7 +127,7 @@ const RoomPage:FC<RoomPageProps> = ({ offers }) => {
         </div>
         <section className="property__map map">
           <Map
-            city={city}
+            cityLocation={mockCity.location}
             points={points}
             selectedPointsId={Number(id)}
           />
