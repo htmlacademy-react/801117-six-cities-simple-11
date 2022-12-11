@@ -6,16 +6,16 @@ export enum AppRoute {
   Room = '/offer/:id',
 }
 
-export enum WidthForRating {
-  oneStar = 20,
-  twoStar = 40,
-  threeStar = 60,
-  fourStar = 80,
-  fiveStar = 100,
-}
-
 export enum APIRoute {
   Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 export enum City {
@@ -77,4 +77,12 @@ export const CITIES: OfferCity[] = [
     },
   }
 ];
+
+export enum WidthForRating {
+  oneStar = 20,
+  twoStar = 40,
+  threeStar = 60,
+  fourStar = 80,
+  fiveStar = 100,
+}
 

@@ -1,10 +1,25 @@
 import { FC } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import cn from 'classnames';
-import { AppRoute } from '../../const';
+import { logoutAction } from '../../store/api-action';
+import { AppRoute,AuthorizationStatus } from '../../const';
+import './header.css';
 
 const Header:FC = () => {
   const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const user = useAppSelector((state) => state.user);
+
+  const handleSignOutButtonClick = () => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(logoutAction());
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
 
   return (
     <header className="header">
@@ -25,13 +40,18 @@ const Header:FC = () => {
                 <li className="header__nav-item user">
                   <div className="header__nav-profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    {user && <span className="header__user-name user__name">{user.email}</span>}
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to={AppRoute.Login}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
+                  <button
+                    className="button_nav-link header__nav-link header__nav-link--profile"
+                    onClick={handleSignOutButtonClick}
+                  >
+                    <span className="header__signout">
+                      {authorizationStatus === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'}
+                    </span>
+                  </button>
                 </li>
               </ul>
             </nav>

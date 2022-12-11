@@ -8,22 +8,30 @@ import {
   sortOffersTopRatedFirst,
   loadOffers,
   setIsOffersDataLoading,
+  requireAuthorization,
+  setUserData,
 } from './action';
-import { City } from '../const';
+import { City, AuthorizationStatus } from '../const';
 import { Offers } from '../types';
+import { UserData } from '../types/user-data';
 
-type TInitialState = {
+
+type InitialState = {
   city: City;
   isOffersDataLoading: boolean;
   offers: Offers;
   offersInCurrentCity: Offers;
+  authorizationStatus: AuthorizationStatus;
+  user: UserData | null;
 }
 
-const initialState: TInitialState = {
+const initialState: InitialState = {
   city: City.Paris,
   isOffersDataLoading: false,
   offers: [],
   offersInCurrentCity: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -51,5 +59,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setIsOffersDataLoading, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setUserData, (state, action) => {
+      state.user = action.payload;
     });
 });
