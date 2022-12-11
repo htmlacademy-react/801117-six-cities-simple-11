@@ -49,5 +49,4 @@ export type Review = {
   comment: string;
   date: string;
   rating: number;
-
 };
