@@ -1,15 +1,22 @@
-import { OfferCity } from './types';
+import { OfferCity, ratingStar } from './types';
+
+export const MAX_LENGTH_COMMENT = 300;
+export const MIN_LENGTH_COMMENT = 50;
+export const MAX_COUNT_RENDER_REVIEW = 10;
 
 export enum AppRoute {
   Main = '/',
   Login = '/login',
   Room = '/offer/:id',
+  NotFound = '*',
 }
 
 export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  NearbyOffers = '/nearby',
+  Comments = '/comments',
 }
 
 export enum AuthorizationStatus {
@@ -76,6 +83,29 @@ export const CITIES: OfferCity[] = [
       zoom: 13,
     },
   }
+];
+
+export const ratingStars: ratingStar[] = [
+  {
+    stars: 5,
+    title: 'perfect',
+  },
+  {
+    stars: 4,
+    title: 'good',
+  },
+  {
+    stars: 3,
+    title: 'not bad',
+  },
+  {
+    stars: 2,
+    title: 'badly',
+  },
+  {
+    stars: 1,
+    title: 'terribly',
+  },
 ];
 
 export enum WidthForRating {

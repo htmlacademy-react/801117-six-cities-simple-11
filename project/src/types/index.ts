@@ -50,3 +50,10 @@ export type Review = {
   date: string;
   rating: number;
 };
+
+export type Reviews = Review[];
+
+export type ratingStar = {
+  stars: number;
+  title: string;
+}

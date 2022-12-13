@@ -15,7 +15,7 @@ const OfferCardList:FC<OfferCardListProps> = () => {
   const [activeOfferCardId, setActiveOfferCardId] = useState<number | null>(null);
 
   const currentCity = useAppSelector((state) => state.city);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector((state) => state.isDataLoading);
   const offersInCurrentCity = useAppSelector((state) => state.offersInCurrentCity);
 
   const handleOfferCardMauseOver = (offer: Offer) => {

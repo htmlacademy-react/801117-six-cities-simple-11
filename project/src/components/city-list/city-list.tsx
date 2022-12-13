@@ -21,7 +21,8 @@ const CityList:FC = () => {
                 <a className={cn(
                   'locations__item-link',
                   'tabs__item',
-                  {'tabs__item--active': city === currentCity})}
+                  {'tabs__item--active': city === currentCity}
+                )}
                 href='/'
                 onClick={(evt) => {
                   evt.preventDefault();
