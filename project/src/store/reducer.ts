@@ -7,29 +7,38 @@ import {
   sortOffersPriceHighToLow,
   sortOffersTopRatedFirst,
   loadOffers,
-  setIsOffersDataLoading,
+  loadCurrentOffer,
+  loadComments,
+  loadNearbyOffers,
+  setIsDataLoading,
   requireAuthorization,
   setUserData,
 } from './action';
 import { City, AuthorizationStatus } from '../const';
-import { Offers } from '../types';
+import { Offers, Offer, Reviews } from '../types';
 import { UserData } from '../types/user-data';
 
 
 type InitialState = {
   city: City;
-  isOffersDataLoading: boolean;
+  isDataLoading: boolean;
   offers: Offers;
   offersInCurrentCity: Offers;
+  currentOffer: Offer | null;
+  nearbyOffers: Offers;
+  comments: Reviews;
   authorizationStatus: AuthorizationStatus;
   user: UserData | null;
 }
 
 const initialState: InitialState = {
   city: City.Paris,
-  isOffersDataLoading: false,
+  isDataLoading: false,
   offers: [],
   offersInCurrentCity: [],
+  currentOffer: null,
+  nearbyOffers: [],
+  comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   user: null,
 };
@@ -57,8 +66,17 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(setIsOffersDataLoading, (state, action) => {
-      state.isOffersDataLoading = action.payload;
+    .addCase(loadCurrentOffer, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(loadNearbyOffers, (state, action) => {
+      state.nearbyOffers = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(setIsDataLoading, (state, action) => {
+      state.isDataLoading = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
