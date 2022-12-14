@@ -13,6 +13,7 @@ import {
   redirectToRoute,
 } from './action';
 import { saveToken, dropToken } from '../services/token';
+import { saveUser, dropUser } from '../services/user';
 import { Offers, Offer, Reviews } from '../types';
 import { APIRoute, AppRoute, City, AuthorizationStatus } from '../const';
 import { AuthData } from '../types/auth-data';
@@ -119,6 +120,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   async ({ email, password}, { dispatch, extra: api }) => {
     const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(data.token);
+    saveUser(data);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(setUserData(data));
     dispatch(redirectToRoute(AppRoute.Main));
@@ -134,6 +136,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, { dispatch, extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+    dropUser();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     dispatch(setUserData(null));
   },

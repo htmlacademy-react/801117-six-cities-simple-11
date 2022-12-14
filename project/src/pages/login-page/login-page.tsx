@@ -1,12 +1,16 @@
-import { FC, ChangeEvent, useState, SyntheticEvent } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { FC, ChangeEvent, useState, useEffect, SyntheticEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-action';
+import { AuthorizationStatus, AppRoute } from '../../const';
 
 const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleEmailInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
     setEmail(evt.target.value);
@@ -21,6 +25,12 @@ const LoginPage: FC = () => {
 
     dispatch(loginAction({ email, password }));
   };
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
+    }
+  }, [navigate, authorizationStatus]);
 
   return (
     <main className="page__main page__main--login">

@@ -2,6 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { City, AuthorizationStatus } from '../const';
 import { Offers, Offer, Reviews } from '../types';
 import { UserData } from '../types/user-data';
+import { getUser } from '../services/user';
 import {
   changeCity,
   setOffersInCurrentCity,
@@ -39,7 +40,7 @@ const initialState: InitialState = {
   nearbyOffers: [],
   comments: [],
   authorizationStatus: AuthorizationStatus.Unknown,
-  user: null,
+  user: getUser(),
 };
 
 export const reducer = createReducer(initialState, (builder) => {
