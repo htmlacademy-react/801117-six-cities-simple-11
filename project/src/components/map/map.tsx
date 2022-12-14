@@ -1,4 +1,4 @@
-import { FC, useRef, useEffect } from 'react';
+import { FC, useRef, useEffect, memo } from 'react';
 import { Icon, Marker, LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useMap } from '../../hooks/useMap';
@@ -20,9 +20,10 @@ type MapProps = {
   cityLocation: Location;
   points: (Location & { id: number })[];
   selectedPointsId: number | null;
+  mapClassName: string;
 };
 
-const Map:FC<MapProps> = ({ cityLocation, points, selectedPointsId }) => {
+const Map:FC<MapProps> = ({ cityLocation, points, selectedPointsId, mapClassName }) => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, cityLocation);
 
@@ -46,19 +47,23 @@ const Map:FC<MapProps> = ({ cityLocation, points, selectedPointsId }) => {
       });
 
       newLayer.addTo(map);
-      map.flyTo({
-        lat: cityLocation.latitude,
-        lng: cityLocation.longitude,
-      });
     }
 
     return () => {
       map?.removeLayer(newLayer);
     };
-  }, [map, points, selectedPointsId, cityLocation]);
+  }, [map, points, selectedPointsId]);
 
+  useEffect(() => {
+    if (map) {
+      map.flyTo({
+        lat: cityLocation.latitude,
+        lng: cityLocation.longitude,
+      });
+    }
+  }, [map, cityLocation]);
 
-  return <div style={{height: '100%'}} ref={mapRef} ></div>;
+  return <section className={`${mapClassName} map`} ref={mapRef} ></section>;
 };
 
-export default Map;
+export default memo(Map);

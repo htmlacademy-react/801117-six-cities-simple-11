@@ -1,10 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { OfferCity, ratingStar } from './types';
 
-export const MAX_LENGTH_COMMENT = 300;
-export const MIN_LENGTH_COMMENT = 50;
-export const MAX_COUNT_RENDER_REVIEW = 10;
-
 export const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
 export const REQUEST_TIMEOUT = 5000;
 
@@ -133,3 +129,15 @@ export enum WidthForRating {
   fiveStar = 100,
 }
 
+export enum CommentParam {
+  MinLength = 50,
+  MaxLength = 300,
+}
+
+export enum OfferParam {
+  MaxCountPhotos = 6,
+  MaxCountRenderReview = 10,
+}
+
+export const TILE_LAYER_URL_TEMPLATE = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+export const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';

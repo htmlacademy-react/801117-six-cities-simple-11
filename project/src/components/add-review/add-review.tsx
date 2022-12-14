@@ -2,7 +2,7 @@ import React, { FC, useState, ChangeEvent, SyntheticEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendComment } from '../../store/api-action';
-import { MIN_LENGTH_COMMENT, MAX_LENGTH_COMMENT, ratingStars } from '../../const';
+import { CommentParam, ratingStars } from '../../const';
 
 const AddReview: FC = () => {
   const [rating, setRating] = useState<number>(0);
@@ -39,7 +39,7 @@ const AddReview: FC = () => {
   const isSumitButtonDisabled =
     isLoading ||
     rating === 0 ||
-    (review.length < MIN_LENGTH_COMMENT || review.length > MAX_LENGTH_COMMENT);
+    (review.length < CommentParam.MinLength || review.length > CommentParam.MaxLength);
 
   return (
     <form
@@ -78,8 +78,8 @@ const AddReview: FC = () => {
         className="reviews__textarea form__textarea"
         id="review" name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        minLength={MIN_LENGTH_COMMENT}
-        maxLength={MAX_LENGTH_COMMENT}
+        minLength={CommentParam.MinLength}
+        maxLength={CommentParam.MaxLength}
         onChange={handleTextareaChange}
         value={review}
         disabled={isLoading}

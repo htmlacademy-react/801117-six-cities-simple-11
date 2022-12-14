@@ -40,13 +40,12 @@ const RoomPage:FC = () => {
       <section className="property">
         <RoomGallery photos={offer.images} />
         <RoomInfo offer={offer} />
-        <section className="property__map map">
-          <Map
-            cityLocation={offer.city.location}
-            points={points}
-            selectedPointsId={Number(id)}
-          />
-        </section>
+        <Map
+          cityLocation={offer.city.location}
+          points={points}
+          selectedPointsId={Number(id)}
+          mapClassName='property__map'
+        />
       </section>
       <RoomNearPlaces />
     </main>

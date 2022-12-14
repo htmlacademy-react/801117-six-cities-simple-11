@@ -9,8 +9,8 @@ const Loyout = () => {
   return (
     <div className={cn(
       'page',
-      {'page-gray': pathname === AppRoute.Main || pathname === AppRoute.Login},
-      {'page-main': pathname === AppRoute.Main},
+      {'page--gray': pathname === AppRoute.Main || pathname === AppRoute.Login},
+      {'page--main': pathname === AppRoute.Main},
       {'page--login': pathname === AppRoute.Login}
     )}
     >
