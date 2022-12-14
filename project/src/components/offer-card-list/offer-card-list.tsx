@@ -52,13 +52,12 @@ const OfferCardList:FC<OfferCardListProps> = () => {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map">
-            <Map
-              cityLocation={currentCityLocation}
-              points={points}
-              selectedPointsId={activeOfferCardId}
-            />
-          </section>
+          <Map
+            cityLocation={currentCityLocation}
+            points={points}
+            selectedPointsId={activeOfferCardId}
+            mapClassName='cities__map'
+          />
         </div>
       </div>
     </div>

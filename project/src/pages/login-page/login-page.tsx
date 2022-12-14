@@ -59,7 +59,7 @@ const LoginPage: FC = () => {
               <label className="visually-hidden">Password</label>
               <input
                 className="login__input form__input"
-                type="password"
+                type="text"
                 name="password"
                 placeholder="Password"
                 pattern='^(?=.*\d)(?=.*[a-zA-Z])(?!.*\s).*$'

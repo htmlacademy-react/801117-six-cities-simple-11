@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks';
-import { AuthorizationStatus, MAX_COUNT_RENDER_REVIEW } from '../../const';
+import { AuthorizationStatus, OfferParam } from '../../const';
 import Review from '../review/review';
 import AddReview from '../add-review/add-review';
 
@@ -13,7 +13,9 @@ const ReviewList:FC = () => {
       <h2 className="reviews__title">
         {reviews.length === 1 ? 'Review' : 'Reviews'} &middot;
         <span className="reviews__amount">
-          {reviews.length > MAX_COUNT_RENDER_REVIEW ? MAX_COUNT_RENDER_REVIEW : reviews.length}
+          {reviews.length > OfferParam.MaxCountRenderReview
+            ? OfferParam.MaxCountRenderReview
+            : reviews.length}
         </span>
       </h2>
       <ul className="reviews__list">
