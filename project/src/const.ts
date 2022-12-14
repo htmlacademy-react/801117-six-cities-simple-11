@@ -1,8 +1,18 @@
+import { StatusCodes } from 'http-status-codes';
 import { OfferCity, ratingStar } from './types';
 
 export const MAX_LENGTH_COMMENT = 300;
 export const MIN_LENGTH_COMMENT = 50;
 export const MAX_COUNT_RENDER_REVIEW = 10;
+
+export const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
+export const REQUEST_TIMEOUT = 5000;
+
+export const StatusCodeMapping: Record<number, boolean> = {
+  [StatusCodes.BAD_REQUEST]: true,
+  [StatusCodes.UNAUTHORIZED]: true,
+  [StatusCodes.NOT_FOUND]: true
+};
 
 export enum AppRoute {
   Main = '/',
@@ -84,6 +94,13 @@ export const CITIES: OfferCity[] = [
     },
   }
 ];
+
+export const SORTING_TYPES: Record<string, string> = {
+  POPULAR: 'Popular',
+  PRICE_LOW_TO_HIGH: 'Price: low to high',
+  PRICE_HIGH_TO_LOW: 'Price: high to low',
+  TOP_RATED_FIRST: 'Top rated first',
+};
 
 export const ratingStars: ratingStar[] = [
   {

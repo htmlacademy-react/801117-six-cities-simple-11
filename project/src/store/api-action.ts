@@ -17,6 +17,7 @@ import { Offers, Offer, Reviews } from '../types';
 import { APIRoute, AppRoute, City, AuthorizationStatus } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
+import { ReviewData } from '../types/review-data';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -78,12 +79,6 @@ export const fetchComments = createAsyncThunk<void, string, {
     dispatch(setIsDataLoading(false));
   },
 );
-
-type ReviewData = {
-  offerId: string;
-  rating: number;
-  comment: string;
-}
 
 export const sendComment = createAsyncThunk<void, ReviewData, {
   dispatch: AppDispatch;

@@ -1,4 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { City, AuthorizationStatus } from '../const';
+import { Offers, Offer, Reviews } from '../types';
+import { UserData } from '../types/user-data';
 import {
   changeCity,
   setOffersInCurrentCity,
@@ -14,10 +17,6 @@ import {
   requireAuthorization,
   setUserData,
 } from './action';
-import { City, AuthorizationStatus } from '../const';
-import { Offers, Offer, Reviews } from '../types';
-import { UserData } from '../types/user-data';
-
 
 type InitialState = {
   city: City;
