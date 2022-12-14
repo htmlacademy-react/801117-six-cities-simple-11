@@ -10,7 +10,11 @@ const RoomNearPlaces:FC = () => {
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <div className="near-places__list places__list">
-          {offers.map((item) => <OfferCard key={item.id} offer={item} />)}
+          {offers.map((item) => (
+            <OfferCard
+              key={item.id}
+              offer={item}
+            />))}
         </div>
       </section>
     </div>

@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus, MAX_COUNT_RENDER_REVIEW } from '../../const';
 import Review from '../review/review';
 import AddReview from '../add-review/add-review';
-import { AuthorizationStatus, MAX_COUNT_RENDER_REVIEW } from '../../const';
 
 const ReviewList:FC = () => {
   const reviews = useAppSelector((state) => state.comments);

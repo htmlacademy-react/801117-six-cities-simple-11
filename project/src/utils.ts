@@ -1,11 +1,19 @@
-import { WidthForRating } from './const';
+import { AxiosResponse } from 'axios';
+import { WidthForRating, SORTING_TYPES, StatusCodeMapping } from './const';
+import {
+  sortOffersPopular,
+  sortOffersPriceLowToHigh,
+  sortOffersPriceHighToLow,
+  sortOffersTopRatedFirst
+} from './store/action';
+
 
 export const getRaitingOfferInStars = (rating: number): number => {
   if (rating > 5) {
     return WidthForRating.fiveStar;
   }
 
-  switch(Math.round(rating)) {
+  switch (Math.round(rating)) {
     case 1:
       return WidthForRating.oneStar;
     case 2:
@@ -21,3 +29,18 @@ export const getRaitingOfferInStars = (rating: number): number => {
       return WidthForRating.oneStar;
   }
 };
+
+export const getActionForSort = (sortingType: string) => {
+  switch(sortingType) {
+    case SORTING_TYPES.PRICE_LOW_TO_HIGH:
+      return sortOffersPriceLowToHigh;
+    case SORTING_TYPES.PRICE_HIGH_TO_LOW:
+      return sortOffersPriceHighToLow;
+    case SORTING_TYPES.TOP_RATED_FIRST:
+      return sortOffersTopRatedFirst;
+    default:
+      return sortOffersPopular;
+  }
+};
+
+export const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];

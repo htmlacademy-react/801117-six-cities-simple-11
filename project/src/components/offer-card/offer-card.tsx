@@ -38,7 +38,13 @@ const OfferCard:FC<OfferCardProps> = ({ offer, onMouseOver }) => {
       )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={images[0]} width="260" height="200" alt="Place" />
+          <img
+            className="place-card__image"
+            src={images[0]}
+            width="260"
+            height="200"
+            alt="Place"
+          />
         </Link>
       </div>
       <div className="place-card__info">

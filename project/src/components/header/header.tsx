@@ -1,17 +1,19 @@
 import { FC } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../hooks';
 import cn from 'classnames';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { logoutAction } from '../../store/api-action';
-import { AppRoute,AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import './header.css';
 
 const Header:FC = () => {
-  const { pathname } = useLocation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const user = useAppSelector((state) => state.user);
+
+  const dispatch = useAppDispatch();
+
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const handleSignOutButtonClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {

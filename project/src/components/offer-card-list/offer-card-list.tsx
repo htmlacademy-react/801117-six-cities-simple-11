@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
-import Sorting from '../sorting/sorting';
-import OfferCard from '../offer-card/offer-card';
 import { useAppSelector } from '../../hooks';
-import Map from '../map/map';
 import { Offers, Offer, Location } from '../../types';
 import { CITIES } from '../../const';
 import Loader from '../loader/loader';
+import Sorting from '../sorting/sorting';
+import OfferCard from '../offer-card/offer-card';
+import Map from '../map/map';
 
 type OfferCardListProps = {
   offers: Offers;
@@ -43,7 +43,12 @@ const OfferCardList:FC<OfferCardListProps> = () => {
           <Sorting />
           <div className="cities__places-list places__list tabs__content">
             {isOffersDataLoading && <Loader />}
-            {offersInCurrentCity.map((item: Offer) => <OfferCard key={item.id} offer={item} onMouseOver={handleOfferCardMauseOver} />)}
+            {offersInCurrentCity.map((item: Offer) => (
+              <OfferCard
+                key={item.id}
+                offer={item}
+                onMouseOver={handleOfferCardMauseOver}
+              />))}
           </div>
         </section>
         <div className="cities__right-section">

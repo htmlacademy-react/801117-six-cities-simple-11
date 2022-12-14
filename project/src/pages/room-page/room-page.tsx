@@ -1,8 +1,8 @@
 import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchСurrentOffer, fetchComments, fetchNearbyOffers } from '../../store/api-action';
+import Map from '../../components/map/map';
 import RoomGallery from '../../components/room-gallery/room-gallery';
 import RoomInfo from '../../components/room-info/room-info';
 import RoomNearPlaces from '../../components/room-near-places/room-near-places';
