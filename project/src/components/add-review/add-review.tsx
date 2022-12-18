@@ -6,11 +6,10 @@ import { CommentParam, ratingStars } from '../../const';
 import { getDataLoadingReviewStatus, getComments } from '../../store/review-process/selectors';
 
 const AddReview: FC = () => {
-  const comments = useAppSelector(getComments);
-
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>('');
 
+  const comments = useAppSelector(getComments);
   const isLoading = useAppSelector(getDataLoadingReviewStatus);
   const dispatch = useAppDispatch();
 
