@@ -4,10 +4,11 @@ import { useAppSelector } from '../../hooks';
 import CityList from '../../components/city-list/city-list';
 import OfferCardList from '../../components/offer-card-list/offer-card-list';
 import OfferCardListEmpty from '../../components/offer-card-list-empty/offer-card-list-empty';
-import { getOffersInCurrentCity } from '../../store/offers-process/selectors';
+import { getOffersInCurrentCity, getDataLoadingStatus } from '../../store/offers-process/selectors';
 
 const MainPage:FC = () => {
   const offers = useAppSelector(getOffersInCurrentCity);
+  const isOffersDataLoading = useAppSelector(getDataLoadingStatus);
 
   return (
     <main className={cn(
@@ -17,7 +18,7 @@ const MainPage:FC = () => {
     )}
     >
       <CityList />
-      {offers.length ? <OfferCardList offers={offers} /> : <OfferCardListEmpty />}
+      {(offers.length || isOffersDataLoading) ? <OfferCardList offers={offers} /> : <OfferCardListEmpty />}
     </main>
   );};
 
