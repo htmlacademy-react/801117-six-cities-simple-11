@@ -1,14 +1,21 @@
-import { FC } from 'react';
+import { FC, SyntheticEvent } from 'react';
 import cn from 'classnames';
-import { changeCity, setOffersInCurrentCity } from '../../store/action';
+import { changeCity, setOffersInCurrentCity } from '../../store/offers-process/offers-process';
 import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getCurrentCity } from '../../store/offers-process/selectors';
 import { City } from '../../const';
 
 const CityList:FC = () => {
-  const currentCity = useAppSelector((state) => state.city);
+  const currentCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
   const cities = Object.values(City);
+
+  const handleCityLinkClick = (city: City) => (evt: SyntheticEvent) => {
+    evt.preventDefault();
+    dispatch(changeCity(city));
+    dispatch(setOffersInCurrentCity(city));
+  };
 
   return (
     <>
@@ -24,11 +31,7 @@ const CityList:FC = () => {
                   {'tabs__item--active': city === currentCity}
                 )}
                 href='/'
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  dispatch(changeCity(city));
-                  dispatch(setOffersInCurrentCity(city));
-                }}
+                onClick={handleCityLinkClick(city)}
                 >
                   <span>{city}</span>
                 </a>

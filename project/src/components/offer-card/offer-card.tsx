@@ -1,7 +1,7 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types';
-import { getRaitingOfferInStars } from '../../utils';
+import { getRaitingOfferInStars, getWordWithCaptialLetter } from '../../utils';
 
 type OfferCardProps = {
   offer: Offer;
@@ -63,10 +63,10 @@ const OfferCard:FC<OfferCardProps> = ({ offer, onMouseOver }) => {
         <h2 className="place-card__name">
           <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{getWordWithCaptialLetter(type)}</p>
       </div>
     </article>
   );
 };
 
-export default OfferCard;
+export default memo(OfferCard);

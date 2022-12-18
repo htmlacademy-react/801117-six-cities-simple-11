@@ -3,12 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { logoutAction } from '../../store/api-action';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getUser } from '../../store/user-process/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import './header.css';
 
 const Header:FC = () => {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUser);
 
   const dispatch = useAppDispatch();
 

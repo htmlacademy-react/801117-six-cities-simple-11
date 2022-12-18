@@ -1,129 +1,96 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
-import {
-  loadOffers,
-  loadCurrentOffer,
-  loadNearbyOffers,
-  loadComments,
-  setOffersInCurrentCity,
-  setIsDataLoading,
-  requireAuthorization,
-  setUserData,
-  redirectToRoute,
-} from './action';
 import { saveToken, dropToken } from '../services/token';
-import { saveUser, dropUser } from '../services/user';
 import { Offers, Offer, Reviews } from '../types';
-import { APIRoute, AppRoute, City, AuthorizationStatus } from '../const';
+import { APIRoute } from '../const';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { ReviewData } from '../types/review-data';
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, {
+
+export const fetchOffersAction = createAsyncThunk<Offers, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchOffers',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setIsDataLoading(true));
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
-    dispatch(loadOffers(data));
-    dispatch(setIsDataLoading(false));
-    dispatch(setOffersInCurrentCity(City.Paris));
+    return data;
   },
 );
 
-export const fetchСurrentOffer = createAsyncThunk<void, string, {
+export const fetchСurrentOffer = createAsyncThunk<Offer, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchСurrentOffer',
-  async (offerId, { dispatch, extra: api }) => {
-    try {
-      dispatch(setIsDataLoading(true));
-      const { data } = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
-      dispatch(loadCurrentOffer(data));
-      dispatch(setIsDataLoading(false));
-    } catch {
-      dispatch(redirectToRoute(AppRoute.NotFound));
-    }
-  },
+  async (offerId, { extra: api }) => {
+    const { data } = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
+    return data;
+  }
 );
 
-export const fetchNearbyOffers = createAsyncThunk<void, string, {
+export const fetchNearbyOffers = createAsyncThunk<Offers, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchNearbyOffers',
-  async (offerId, { dispatch, extra: api }) => {
-    dispatch(setIsDataLoading(true));
+  async (offerId, { extra: api }) => {
     const { data } = await api.get<Offers>(`${APIRoute.Offers}/${offerId}${APIRoute.NearbyOffers}`);
-    dispatch(loadNearbyOffers(data));
-    dispatch(setIsDataLoading(false));
+    return data;
   },
 );
 
-export const fetchComments = createAsyncThunk<void, string, {
+export const fetchComments = createAsyncThunk<Reviews, string, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchComments',
-  async (offerId, { dispatch, extra: api }) => {
-    dispatch(setIsDataLoading(true));
+  async (offerId, { extra: api }) => {
     const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
-    dispatch(loadComments(data));
-    dispatch(setIsDataLoading(false));
+    return data;
   },
 );
 
-export const sendComment = createAsyncThunk<void, ReviewData, {
+export const sendComment = createAsyncThunk<Reviews, ReviewData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/sendComment',
-  async ({ offerId, rating, comment }, { dispatch, extra: api }) => {
-    dispatch(setIsDataLoading(true));
+  async ({ offerId, rating, comment }, { extra: api }) => {
     const { data } = await api.post<Reviews>(`${APIRoute.Comments}/${offerId}`, { rating, comment});
-    dispatch(loadComments(data));
-    dispatch(setIsDataLoading(false));
+    return data;
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, { extra: api }) => {
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    return data;
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({ email, password}, { dispatch, extra: api }) => {
+  async ({ email, password}, { extra: api }) => {
     const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(data.token);
-    saveUser(data);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(setUserData(data));
-    dispatch(redirectToRoute(AppRoute.Main));
+    return data;
   },
 );
 
@@ -133,11 +100,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dropUser();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    dispatch(setUserData(null));
   },
 );
