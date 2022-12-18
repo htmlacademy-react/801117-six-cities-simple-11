@@ -1,6 +1,7 @@
 import { FC, ChangeEvent, useState, useEffect, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { loginAction } from '../../store/api-action';
 import { AuthorizationStatus, AppRoute } from '../../const';
 
@@ -8,7 +9,7 @@ const LoginPage: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

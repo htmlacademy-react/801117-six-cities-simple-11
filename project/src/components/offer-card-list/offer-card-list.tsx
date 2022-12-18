@@ -1,5 +1,10 @@
-import { FC, useState } from 'react';
+import { FC, useState, useCallback } from 'react';
 import { useAppSelector } from '../../hooks';
+import {
+  getCurrentCity,
+  getDataLoadingStatus,
+  getOffersInCurrentCity
+} from '../../store/offers-process/selectors';
 import { Offers, Offer, Location } from '../../types';
 import { CITIES } from '../../const';
 import Loader from '../loader/loader';
@@ -14,13 +19,14 @@ type OfferCardListProps = {
 const OfferCardList:FC<OfferCardListProps> = () => {
   const [activeOfferCardId, setActiveOfferCardId] = useState<number | null>(null);
 
-  const currentCity = useAppSelector((state) => state.city);
-  const isOffersDataLoading = useAppSelector((state) => state.isDataLoading);
-  const offersInCurrentCity = useAppSelector((state) => state.offersInCurrentCity);
+  const currentCity = useAppSelector(getCurrentCity);
+  const isOffersDataLoading = useAppSelector(getDataLoadingStatus);
+  const offersInCurrentCity = useAppSelector(getOffersInCurrentCity);
 
-  const handleOfferCardMauseOver = (offer: Offer) => {
-    setActiveOfferCardId(offer.id);
-  };
+  const handleOfferCardMauseOver = useCallback(
+    (offer: Offer) => {
+      setActiveOfferCardId(offer.id);
+    }, []);
 
   const currentCityLocation: Location = CITIES.find((city) => city.name === currentCity)?.location as Location;
 

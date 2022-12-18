@@ -1,14 +1,17 @@
-import React, { FC, useState, ChangeEvent, SyntheticEvent } from 'react';
+import React, { FC, useState, useEffect, ChangeEvent, SyntheticEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendComment } from '../../store/api-action';
 import { CommentParam, ratingStars } from '../../const';
+import { getDataLoadingReviewStatus, getComments } from '../../store/review-process/selectors';
 
 const AddReview: FC = () => {
+  const comments = useAppSelector(getComments);
+
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>('');
 
-  const isLoading = useAppSelector((state) => state.isDataLoading);
+  const isLoading = useAppSelector(getDataLoadingReviewStatus);
   const dispatch = useAppDispatch();
 
   const { id: offerId } = useParams();
@@ -30,11 +33,13 @@ const AddReview: FC = () => {
         rating,
         comment: review,
       }));
-
-      setRating(0);
-      setReview('');
     }
   };
+
+  useEffect(() => {
+    setRating(0);
+    setReview('');
+  }, [comments]);
 
   const isSumitButtonDisabled =
     isLoading ||

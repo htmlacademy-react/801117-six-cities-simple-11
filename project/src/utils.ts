@@ -5,7 +5,7 @@ import {
   sortOffersPriceLowToHigh,
   sortOffersPriceHighToLow,
   sortOffersTopRatedFirst
-} from './store/action';
+} from './store/offers-process/offers-process';
 
 
 export const getRaitingOfferInStars = (rating: number): number => {
@@ -44,3 +44,6 @@ export const getActionForSort = (sortingType: string) => {
 };
 
 export const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+
+export const getWordWithCaptialLetter = (word: string): string =>
+  word[0].toUpperCase() + word.slice(1);

@@ -1,6 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import cn from 'classnames';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getCurrentCity } from '../../store/offers-process/selectors';
 import { getActionForSort } from '../../utils';
 import { SORTING_TYPES } from '../../const';
 
@@ -8,6 +9,7 @@ const Sorting:FC = () => {
   const [currentSortingType, setCurrentSortingType] = useState<string>(SORTING_TYPES.POPULAR);
   const [isOpenSort, setIsOpenSort] = useState(false);
 
+  const currentCity = useAppSelector(getCurrentCity);
   const dispatch = useAppDispatch();
 
   const handleSortingClick = () => {
@@ -19,6 +21,10 @@ const Sorting:FC = () => {
     setIsOpenSort(false);
     dispatch(getActionForSort(option)());
   };
+
+  useEffect (() => {
+    setCurrentSortingType(SORTING_TYPES.POPULAR);
+  }, [currentCity]);
 
   return (
     <form className="places__sorting" action="#" method="get">

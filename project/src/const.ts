@@ -14,7 +14,7 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Room = '/offer/:id',
-  NotFound = '*',
+  NotFound = '/*',
 }
 
 export enum APIRoute {
@@ -29,6 +29,12 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum NameSpace {
+  Offers = 'OFFERS',
+  User = 'USER',
+  Review = 'REVIEW',
 }
 
 export enum City {

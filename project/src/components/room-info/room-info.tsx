@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import cn from 'classnames';
 import { Offer } from '../../types';
-import { getRaitingOfferInStars } from '../../utils';
+import { getRaitingOfferInStars, getWordWithCaptialLetter } from '../../utils';
 import ReviewList from '../review-list/review-list';
 
 type RoomInfoProps = {
@@ -44,7 +44,7 @@ const RoomInfo:FC<RoomInfoProps> = ({ offer }) => {
         </div>
         <ul className="property__features">
           <li className="property__feature property__feature--entire">
-            {type}
+            {getWordWithCaptialLetter(type)}
           </li>
           <li className="property__feature property__feature--bedrooms">
             {bedrooms} {bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}

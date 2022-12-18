@@ -1,12 +1,14 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks';
+import { getComments } from '../../store/review-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthorizationStatus, OfferParam } from '../../const';
 import Review from '../review/review';
 import AddReview from '../add-review/add-review';
 
 const ReviewList:FC = () => {
-  const reviews = useAppSelector((state) => state.comments);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const reviews = useAppSelector(getComments);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <section className="property__reviews reviews">
@@ -22,7 +24,7 @@ const ReviewList:FC = () => {
         {reviews
           .slice()
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-          .slice(0, 10)
+          .slice(0, OfferParam.MaxCountRenderReview)
           .map((review) => (
             <Review review={review} key={review.id} />
           ))}
